@@ -3,6 +3,8 @@ import { getCurrentUser } from '@/lib/auth';
 import { dataStore } from '@/lib/dataStore';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
+import MobileBottomBar from '@/components/MobileBottomBar';
+import { MobileNavProvider } from '@/context/MobileNavContext';
 
 export default async function DashboardRootLayout({
   children,
@@ -21,18 +23,24 @@ export default async function DashboardRootLayout({
   }));
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
-      {/* Sidebar fijo a la izquierda */}
-      <Sidebar userRole={user.role} userName={user.name} />
+    <MobileNavProvider>
+      <div className="flex h-screen bg-slate-50 overflow-hidden">
+        {/* Sidebar deslizable en móvil / fija en desktop */}
+        <Sidebar userRole={user.role} userName={user.name} />
 
-      {/* Contenido principal con cabecera */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <Header user={user} properties={properties} />
+        {/* Contenido principal con cabecera y barra táctil inferior */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <Header user={user} properties={properties} />
 
-        <main className="flex-1 overflow-y-auto p-6 lg:p-8">
-          {children}
-        </main>
+          {/* Área principal de contenido con padding inferior para la barra móvil */}
+          <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8 touch-scroll">
+            {children}
+          </main>
+
+          {/* Barra de navegación inferior rápida táctil en móviles */}
+          <MobileBottomBar userRole={user.role} />
+        </div>
       </div>
-    </div>
+    </MobileNavProvider>
   );
 }
