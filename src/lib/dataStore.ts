@@ -16,6 +16,7 @@ import {
   FormalNoticeData,
   UserSession,
   UnitData,
+  InventoryItemData,
 } from '@/types';
 
 export function generateMagicToken(): string {
@@ -124,6 +125,14 @@ class DataStore {
     return newUnit;
   }
 
+  getUnitById(unitId: string): UnitData | undefined {
+    for (const prop of this.properties) {
+      const u = prop.units.find((unit) => unit.id === unitId);
+      if (u) return u;
+    }
+    return undefined;
+  }
+
   updateUnit(unitId: string, updates: Partial<UnitData>): UnitData | null {
     for (const prop of this.properties) {
       const uIndex = prop.units.findIndex((u) => u.id === unitId);
@@ -133,6 +142,59 @@ class DataStore {
       }
     }
     return null;
+  }
+
+  // --- Gestión de Inventario y Fotos por Habitación/Unidad ---
+  getUnitInventory(unitId: string): InventoryItemData[] {
+    const unit = this.getUnitById(unitId);
+    return unit?.inventory || [];
+  }
+
+  addInventoryItem(unitId: string, item: Omit<InventoryItemData, 'id'>): InventoryItemData | null {
+    const unit = this.getUnitById(unitId);
+    if (!unit) return null;
+    if (!unit.inventory) unit.inventory = [];
+    const newItem: InventoryItemData = {
+      ...item,
+      id: `inv_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      createdAt: new Date().toISOString(),
+    };
+    unit.inventory.push(newItem);
+    return newItem;
+  }
+
+  updateInventoryItem(unitId: string, itemId: string, updates: Partial<InventoryItemData>): InventoryItemData | null {
+    const unit = this.getUnitById(unitId);
+    if (!unit || !unit.inventory) return null;
+    const index = unit.inventory.findIndex((i) => i.id === itemId);
+    if (index === -1) return null;
+    unit.inventory[index] = { ...unit.inventory[index], ...updates };
+    return unit.inventory[index];
+  }
+
+  deleteInventoryItem(unitId: string, itemId: string): boolean {
+    const unit = this.getUnitById(unitId);
+    if (!unit || !unit.inventory) return false;
+    const initialLength = unit.inventory.length;
+    unit.inventory = unit.inventory.filter((i) => i.id !== itemId);
+    return unit.inventory.length < initialLength;
+  }
+
+  addUnitPhoto(unitId: string, photoUrl: string): boolean {
+    const unit = this.getUnitById(unitId);
+    if (!unit) return false;
+    if (!unit.photos) unit.photos = [];
+    if (!unit.photos.includes(photoUrl)) {
+      unit.photos.push(photoUrl);
+    }
+    return true;
+  }
+
+  removeUnitPhoto(unitId: string, photoUrl: string): boolean {
+    const unit = this.getUnitById(unitId);
+    if (!unit || !unit.photos) return false;
+    unit.photos = unit.photos.filter((p) => p !== photoUrl);
+    return true;
   }
 
   // --- Contratos LAU Art. 3 ---
@@ -166,12 +228,16 @@ class DataStore {
 
   createContract(data: Omit<ContractData, 'id' | 'magicToken' | 'magicTokenExpiresAt' | 'status'>): ContractData {
     const token = generateMagicToken();
+    const unit = this.getUnitById(data.unitId);
+
     const newContract: ContractData = {
       ...data,
       id: `ct_${Date.now()}`,
       status: 'PENDING_SIGNATURE',
       magicToken: token,
       magicTokenExpiresAt: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
+      inventorySnapshot: data.inventorySnapshot || (unit?.inventory ? JSON.parse(JSON.stringify(unit.inventory)) : []),
+      unitPhotos: data.unitPhotos || (unit?.photos ? [...unit.photos] : []),
     };
 
     // Actualizar estado de la unidad a RESERVADA

@@ -37,6 +37,8 @@ export interface InventoryItemData {
   verifiedByTenant?: boolean;
   tenantNotes?: string;
   photoUrl?: string;
+  notes?: string;
+  createdAt?: string;
 }
 
 export interface FixedExpenseData {
@@ -77,6 +79,7 @@ export interface UnitData {
     startDate: string;
     endDate: string;
   };
+  photos?: string[];
   inventory?: InventoryItemData[];
 }
 
@@ -136,6 +139,9 @@ export interface ContractData {
     eidasValidationStatus: string;
   };
   inventoryVerifiedAt?: string;
+  inventoryRemarks?: string;
+  inventorySnapshot?: InventoryItemData[];
+  unitPhotos?: string[];
   keyDeliveryDate?: string;
   deposit?: {
     id: string;

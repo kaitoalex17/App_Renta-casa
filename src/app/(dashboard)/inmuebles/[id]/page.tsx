@@ -14,6 +14,7 @@ import {
   Shield,
   Zap,
 } from 'lucide-react';
+import PropertyUnitsList from '@/components/PropertyUnitsList';
 
 export default async function PropertyDetailPage({
   params,
@@ -186,81 +187,8 @@ export default async function PropertyDetailPage({
             </table>
           </div>
 
-          {/* Listado de Unidades Hijas */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
-              <div>
-                <h2 className="text-sm font-bold text-slate-900">
-                  Unidades del Inmueble ({property.units.length})
-                </h2>
-                <p className="text-xs text-slate-500">
-                  Habitaciones con tope de consumo y Apartamentos con cobro directo
-                </p>
-              </div>
-              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition">
-                <Plus className="w-3.5 h-3.5" />
-                <span>Añadir Unidad</span>
-              </button>
-            </div>
-
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {property.units.map((unit) => (
-                <div
-                  key={unit.id}
-                  className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:border-teal-300 transition shadow-xs flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-black text-sm text-slate-900">{unit.name}</span>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          unit.status === 'OCCUPIED'
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : unit.status === 'RESERVED'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'bg-slate-200 text-slate-700'
-                        }`}
-                      >
-                        {unit.status}
-                      </span>
-                    </div>
-
-                    <div className="mt-3 space-y-1 text-xs text-slate-600">
-                      <p>
-                        <strong>Tipo:</strong> {unit.type === 'ROOM' ? 'Habitación Coliving' : 'Apartamento Completo'}
-                      </p>
-                      {unit.surfaceArea && <p><strong>Superficie:</strong> {unit.surfaceArea} m²</p>}
-                      {unit.bedType && <p><strong>Cama:</strong> {unit.bedType}</p>}
-                      <p>
-                        <strong>Baño:</strong> {unit.privateBathroom ? 'Privado en Suite' : 'Compartido en zona común'}
-                      </p>
-                      {unit.type === 'ROOM' && (
-                        <p className="text-teal-700 font-semibold">
-                          <strong>Tope Suministros:</strong> {unit.utilityCap.toFixed(2)} €/mes incluidos
-                        </p>
-                      )}
-                      {unit.type === 'APARTMENT' && unit.electricMeterNumber && (
-                        <p className="text-blue-700 font-mono text-[11px]">
-                          <strong>Contador Luz:</strong> {unit.electricMeterNumber}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-slate-400 uppercase font-bold block">Renta Base</span>
-                      <span className="text-base font-black text-slate-900">{unit.baseRent.toFixed(2)} €</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-slate-400 uppercase font-bold block">Fianza Exigida</span>
-                      <span className="text-xs font-bold text-slate-700">{unit.depositAmount.toFixed(2)} €</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Listado de Unidades Hijas con Gestor de Inventario y Fotos */}
+          <PropertyUnitsList initialUnits={property.units} propertyId={property.id} />
         </div>
       </div>
     </div>

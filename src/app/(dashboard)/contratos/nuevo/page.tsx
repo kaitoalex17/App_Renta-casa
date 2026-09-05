@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -12,6 +12,8 @@ import {
   CheckCircle2,
   Copy,
   MessageSquareShare,
+  Layers,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { TemporalCauseType } from '@/types';
 
@@ -40,6 +42,18 @@ export default function NewContractPage() {
   const [error, setError] = useState('');
   const [createdContract, setCreatedContract] = useState<any>(null);
   const [copied, setCopied] = useState(false);
+  const [unitInventory, setUnitInventory] = useState<any[]>([]);
+  const [unitPhotos, setUnitPhotos] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/units/${unitId}/inventory`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.inventory) setUnitInventory(data.inventory);
+        if (data.photos) setUnitPhotos(data.photos);
+      })
+      .catch(console.error);
+  }, [unitId]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -216,11 +230,56 @@ export default function NewContractPage() {
                     onChange={(e) => setUnitId(e.target.value)}
                     className="w-full text-xs bg-white border border-slate-300 rounded-lg p-2.5"
                   >
+                    <option value="unit_h1">Habitación 1 - Exterior Balcón (550 €)</option>
+                    <option value="unit_h2">Habitación 2 - Suite Baño Privado (650 €)</option>
                     <option value="unit_h3">Habitación 3 - Interior (Libre - 450 €)</option>
                     <option value="unit_h4">Habitación 4 - Luminosa (490 €)</option>
                     <option value="unit_apt1">Apartamento Soho Completo (950 €)</option>
                   </select>
                 </div>
+              </div>
+
+              {/* Vista previa de Anexo II del contrato */}
+              <div className="pt-3 border-t border-slate-200 bg-white p-3.5 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5 uppercase tracking-wider">
+                    <Layers className="w-3.5 h-3.5 text-teal-600" />
+                    Anexo II Vinculado ({unitInventory.length} elementos · {unitPhotos.length} fotos web)
+                  </span>
+                  <span className="text-[10px] text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                    Se congelará en la firma
+                  </span>
+                </div>
+
+                {unitInventory.length === 0 ? (
+                  <p className="text-[11px] text-slate-400 italic">
+                    Sin elementos de inventario. Puedes gestionarlos en la ficha del inmueble.
+                  </p>
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {unitInventory.map((item: any) => (
+                      <span
+                        key={item.id}
+                        className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-700 rounded text-[10px] font-medium"
+                      >
+                        <strong>{item.quantity}x</strong> {item.name} ({item.condition})
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {unitPhotos.length > 0 && (
+                  <div className="mt-2.5 flex items-center gap-2 overflow-x-auto pb-1">
+                    {unitPhotos.map((url, i) => (
+                      <img
+                        key={i}
+                        src={url}
+                        alt="Estado habitación"
+                        className="w-14 h-10 rounded object-cover border border-slate-200 shrink-0"
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 

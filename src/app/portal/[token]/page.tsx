@@ -18,6 +18,8 @@ import {
   Phone,
   ShieldCheck,
   Send,
+  Layers,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 export default function TenantPortalPage() {
@@ -243,6 +245,69 @@ export default function TenantPortalPage() {
             </p>
           </div>
         </div>
+
+        {/* Inventario de Entrada & Estado de la Habitación (Anexo II) */}
+        {contract && ((contract.inventorySnapshot && contract.inventorySnapshot.length > 0) || (contract.unitPhotos && contract.unitPhotos.length > 0)) && (
+          <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <Layers className="w-4 h-4 text-teal-400" />
+                <span>Inventario de Entrada & Estado (Anexo II)</span>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800">
+                {contract.inventoryVerifiedAt ? 'Verificado 48h Conforme' : 'Plazo 48h Activo'}
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-400">
+              Dotación y mobiliario recibido en {contract.unitName} al formalizar la entrada:
+            </p>
+
+            {contract.inventorySnapshot && contract.inventorySnapshot.length > 0 && (
+              <div className="space-y-1.5 pt-1">
+                {contract.inventorySnapshot.map((item: any) => (
+                  <div
+                    key={item.id}
+                    className="p-2.5 bg-slate-800/80 rounded-xl flex items-center justify-between text-xs"
+                  >
+                    <div>
+                      <span className="font-bold text-white block">{item.quantity}x {item.name}</span>
+                      {item.notes && <p className="text-[10px] text-slate-400 italic">{item.notes}</p>}
+                    </div>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-950 text-teal-300 border border-teal-800 shrink-0">
+                      {item.condition}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {contract.unitPhotos && contract.unitPhotos.length > 0 && (
+              <div className="pt-2">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                  Fotografías de Comprobación de Entrega:
+                </span>
+                <div className="grid grid-cols-2 gap-2">
+                  {contract.unitPhotos.map((url: string, i: number) => (
+                    <a
+                      key={i}
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-xl overflow-hidden border border-slate-800 aspect-4/3 block relative group"
+                    >
+                      <img
+                        src={url}
+                        alt="Estado habitación"
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Tus Recibos Mensuales */}
         <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">

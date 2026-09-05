@@ -112,6 +112,51 @@ export const INITIAL_PROPERTIES: PropertyData[] = [
           startDate: '2025-09-01',
           endDate: '2026-06-30',
         },
+        photos: [
+          'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80',
+        ],
+        inventory: [
+          {
+            id: 'inv_h1_1',
+            name: 'Cama doble con canapé abatible y colchón viscoelástico con funda protectora',
+            quantity: 1,
+            condition: 'Excelente estado',
+            photoUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80',
+            notes: 'Protector de colchón impermeable recién lavado a 60°C.',
+          },
+          {
+            id: 'inv_h1_2',
+            name: 'Escritorio de madera maciza con flexo LED articulado',
+            quantity: 1,
+            condition: 'Nuevo / A estrenar',
+            notes: 'Enchufe múltiple con protección de sobretensión.',
+          },
+          {
+            id: 'inv_h1_3',
+            name: 'Silla ergonómica de oficina con reposabrazos y ruedas de goma',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_h1_4',
+            name: 'Armario ropero de 3 puertas con espejos y cajonera interior',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_h1_5',
+            name: 'Juego de llaves completo (portal + piso + cerradura privada habitación)',
+            quantity: 1,
+            condition: 'Correcto',
+          },
+          {
+            id: 'inv_h1_6',
+            name: 'Estor enrollable traslúcido y cortinas opacas de balcón',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+        ],
       },
       {
         id: 'unit_h2',
@@ -134,6 +179,48 @@ export const INITIAL_PROPERTIES: PropertyData[] = [
           startDate: '2025-10-01',
           endDate: '2026-02-28', // Fin primer cuatrimestre UMA
         },
+        photos: [
+          'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
+        ],
+        inventory: [
+          {
+            id: 'inv_h2_1',
+            name: 'Cama Queen 150x200cm con cabecero tapizado y canapé abatible',
+            quantity: 1,
+            condition: 'Nuevo / A estrenar',
+          },
+          {
+            id: 'inv_h2_2',
+            name: 'Baño privado en suite (mampara cristal, plato de ducha y lavabo)',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_h2_3',
+            name: 'Escritorio amplio con pasacables y flexo táctil',
+            quantity: 1,
+            condition: 'Nuevo / A estrenar',
+          },
+          {
+            id: 'inv_h2_4',
+            name: 'Silla ergonómica transpirable con soporte lumbar',
+            quantity: 1,
+            condition: 'Nuevo / A estrenar',
+          },
+          {
+            id: 'inv_h2_5',
+            name: 'Armario empotrado doble con altillo y cajones',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_h2_6',
+            name: 'Juego de llaves completo',
+            quantity: 1,
+            condition: 'Correcto',
+          },
+        ],
       },
       {
         id: 'unit_h3',
@@ -149,6 +236,35 @@ export const INITIAL_PROPERTIES: PropertyData[] = [
         depositAmount: 450.0,
         utilityCap: 35.0,
         status: 'AVAILABLE',
+        photos: [
+          'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+        ],
+        inventory: [
+          {
+            id: 'inv_h3_1',
+            name: 'Cama individual 105x190cm con canapé',
+            quantity: 1,
+            condition: 'Buen estado',
+          },
+          {
+            id: 'inv_h3_2',
+            name: 'Mesa de estudio y flexo LED',
+            quantity: 1,
+            condition: 'Buen estado',
+          },
+          {
+            id: 'inv_h3_3',
+            name: 'Armario ropero 2 puertas',
+            quantity: 1,
+            condition: 'Buen estado',
+          },
+          {
+            id: 'inv_h3_4',
+            name: 'Juego de llaves',
+            quantity: 1,
+            condition: 'Correcto',
+          },
+        ],
       },
       {
         id: 'unit_h4',
@@ -164,6 +280,27 @@ export const INITIAL_PROPERTIES: PropertyData[] = [
         depositAmount: 490.0,
         utilityCap: 35.0,
         status: 'RESERVED',
+        photos: [],
+        inventory: [
+          {
+            id: 'inv_h4_1',
+            name: 'Cama doble 135x190cm con somier de láminas',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_h4_2',
+            name: 'Escritorio con cajonera y silla de estudio',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_h4_3',
+            name: 'Armario ropero blanco 2 puertas',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+        ],
       },
     ],
   },
@@ -203,6 +340,42 @@ export const INITIAL_PROPERTIES: PropertyData[] = [
         utilityCap: 0.0, // Repercusión íntegra de luz/agua
         electricMeterNumber: 'ES002100000489123847',
         status: 'AVAILABLE',
+        photos: [
+          'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
+        ],
+        inventory: [
+          {
+            id: 'inv_apt_1',
+            name: 'Cocina americana equipada (vitrocerámica, campana, microondas y nevera)',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_apt_2',
+            name: 'Sofá cama 2 plazas y mesa de centro elevable',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_apt_3',
+            name: 'Cama doble 150cm con cabecero y armario ropero empotrado',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_apt_4',
+            name: 'Bomba de aire acondicionado frío/calor inverter',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+          {
+            id: 'inv_apt_5',
+            name: 'Smart TV 43 pulgadas 4K con soporte de pared',
+            quantity: 1,
+            condition: 'Excelente estado',
+          },
+        ],
       },
     ],
   },
@@ -245,6 +418,52 @@ export const INITIAL_CONTRACTS: ContractData[] = [
       eidasValidationStatus: 'ADVANCED_ELECTRONIC_SIGNATURE_EIDAS_COMPLIANT',
     },
     inventoryVerifiedAt: '2025-09-02T11:00:00.000Z',
+    inventoryRemarks: 'Revisado y conforme por el arrendatario en el portal dentro del plazo de 48 horas.',
+    unitPhotos: [
+      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80',
+    ],
+    inventorySnapshot: [
+      {
+        id: 'inv_h1_1',
+        name: 'Cama doble con canapé abatible y colchón viscoelástico con funda protectora',
+        quantity: 1,
+        condition: 'Excelente estado',
+        photoUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80',
+        notes: 'Protector de colchón impermeable recién lavado a 60°C.',
+      },
+      {
+        id: 'inv_h1_2',
+        name: 'Escritorio de madera maciza con flexo LED articulado',
+        quantity: 1,
+        condition: 'Nuevo / A estrenar',
+        notes: 'Enchufe múltiple con protección de sobretensión.',
+      },
+      {
+        id: 'inv_h1_3',
+        name: 'Silla ergonómica de oficina con reposabrazos y ruedas de goma',
+        quantity: 1,
+        condition: 'Excelente estado',
+      },
+      {
+        id: 'inv_h1_4',
+        name: 'Armario ropero de 3 puertas con espejos y cajonera interior',
+        quantity: 1,
+        condition: 'Excelente estado',
+      },
+      {
+        id: 'inv_h1_5',
+        name: 'Juego de llaves completo (portal + piso + cerradura privada habitación)',
+        quantity: 1,
+        condition: 'Correcto',
+      },
+      {
+        id: 'inv_h1_6',
+        name: 'Estor enrollable traslúcido y cortinas opacas de balcón',
+        quantity: 1,
+        condition: 'Excelente estado',
+      },
+    ],
     keyDeliveryDate: '2025-09-01T12:00:00.000Z',
     deposit: {
       id: 'dep_juan',
@@ -288,6 +507,51 @@ export const INITIAL_CONTRACTS: ContractData[] = [
       contractHashSha256: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
       eidasValidationStatus: 'ADVANCED_ELECTRONIC_SIGNATURE_EIDAS_COMPLIANT',
     },
+    inventoryVerifiedAt: '2025-10-02T16:00:00.000Z',
+    inventoryRemarks: 'Verificado conforme en plazo de 48 horas tras entrega de llaves.',
+    unitPhotos: [
+      'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
+    ],
+    inventorySnapshot: [
+      {
+        id: 'inv_h2_1',
+        name: 'Cama Queen 150x200cm con cabecero tapizado y canapé abatible',
+        quantity: 1,
+        condition: 'Nuevo / A estrenar',
+      },
+      {
+        id: 'inv_h2_2',
+        name: 'Baño privado en suite (mampara cristal, plato de ducha y lavabo)',
+        quantity: 1,
+        condition: 'Excelente estado',
+      },
+      {
+        id: 'inv_h2_3',
+        name: 'Escritorio amplio con pasacables y flexo táctil',
+        quantity: 1,
+        condition: 'Nuevo / A estrenar',
+      },
+      {
+        id: 'inv_h2_4',
+        name: 'Silla ergonómica transpirable con soporte lumbar',
+        quantity: 1,
+        condition: 'Nuevo / A estrenar',
+      },
+      {
+        id: 'inv_h2_5',
+        name: 'Armario empotrado doble con altillo y cajones',
+        quantity: 1,
+        condition: 'Excelente estado',
+      },
+      {
+        id: 'inv_h2_6',
+        name: 'Juego de llaves completo',
+        quantity: 1,
+        condition: 'Correcto',
+      },
+    ],
+    keyDeliveryDate: '2025-10-01T12:00:00.000Z',
     deposit: {
       id: 'dep_elena',
       amountHeld: 650.0,

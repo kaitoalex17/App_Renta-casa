@@ -13,6 +13,8 @@ import {
   ChevronDown,
   ChevronUp,
   Fingerprint,
+  Layers,
+  Image as ImageIcon,
 } from 'lucide-react';
 import SignaturePad from '@/components/SignaturePad';
 
@@ -24,9 +26,10 @@ export default function MobileSigningPage() {
   const [contract, setContract] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showFullTerms, setShowFullTerms] = useState(false);
-  const [signatureData, setSignatureData] = useState('');
+  const [signatureData, setSignatureData] = useState<string | null>(null);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [showFullTerms, setShowFullTerms] = useState(false);
+  const [showInventory, setShowInventory] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [signedSuccess, setSignedSuccess] = useState(false);
   const [signedResult, setSignedResult] = useState<any>(null);
@@ -259,6 +262,93 @@ export default function MobileSigningPage() {
             </div>
           </div>
         </div>
+
+        {/* Tarjeta 5: Anexo II — Dotación & Inventario con Fotos */}
+        {((contract.inventorySnapshot && contract.inventorySnapshot.length > 0) ||
+          (contract.unitPhotos && contract.unitPhotos.length > 0)) && (
+          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xs">
+            <button
+              type="button"
+              onClick={() => setShowInventory(!showInventory)}
+              className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-800/40 transition"
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-teal-500/20 text-teal-400 rounded-lg">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                    Anexo II — Inventario de Entrada
+                  </span>
+                  <span className="text-xs font-bold text-white">
+                    {contract.inventorySnapshot?.length || 0} muebles/enseres · {contract.unitPhotos?.length || 0} fotos de estado
+                  </span>
+                </div>
+              </div>
+              {showInventory ? (
+                <ChevronUp className="w-4 h-4 text-slate-400" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-slate-400" />
+              )}
+            </button>
+
+            {showInventory && (
+              <div className="p-4 border-t border-slate-800 space-y-3 bg-slate-950/40 text-xs">
+                {contract.inventorySnapshot && contract.inventorySnapshot.length > 0 && (
+                  <div className="space-y-1.5">
+                    {contract.inventorySnapshot.map((item: any) => (
+                      <div
+                        key={item.id}
+                        className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between text-slate-300"
+                      >
+                        <div className="pr-2">
+                          <span className="font-semibold text-white">
+                            {item.quantity}x {item.name}
+                          </span>
+                          {item.notes && (
+                            <p className="text-[10px] text-slate-400 italic mt-0.5">{item.notes}</p>
+                          )}
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30 shrink-0">
+                          {item.condition}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {contract.unitPhotos && contract.unitPhotos.length > 0 && (
+                  <div className="pt-2">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
+                      Fotos del Estado de la Habitación (WebP):
+                    </span>
+                    <div className="grid grid-cols-2 gap-2">
+                      {contract.unitPhotos.map((url: string, i: number) => (
+                        <a
+                          key={i}
+                          href={url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="rounded-lg overflow-hidden border border-slate-800 aspect-4/3 block relative group"
+                        >
+                          <img
+                            src={url}
+                            alt="Estado habitación"
+                            className="w-full h-full object-cover group-hover:scale-105 transition"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-[10px] text-amber-400/90 leading-tight bg-amber-500/10 p-2.5 rounded border border-amber-500/20">
+                  ⚠️ <strong>Plazo legal de 48 horas:</strong> Dispones de 48 horas desde la entrega de llaves para revisar la dotación o comunicar anomalías en el portal del inquilino.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Desplegable del Contrato Legal Completo */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
