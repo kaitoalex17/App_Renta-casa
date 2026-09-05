@@ -258,7 +258,7 @@ export default function FinancesPage() {
               </h3>
             </div>
             <span className="text-[11px] font-mono font-bold text-teal-800 bg-teal-50 px-2.5 py-0.5 rounded border border-teal-200">
-              Ref. Autonómica: IVIMA-MAD-2025-098124
+              Ref. Autonómica: AVRA-MA-2025-098124 (Junta de Andalucía)
             </span>
           </div>
 

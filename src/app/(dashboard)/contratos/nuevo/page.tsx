@@ -19,7 +19,7 @@ export default function NewContractPage() {
   const router = useRouter();
 
   // Form State
-  const [propertyId, setPropertyId] = useState('prop_granvia');
+  const [propertyId, setPropertyId] = useState('prop_teatinos');
   const [unitId, setUnitId] = useState('unit_h3');
   const [tenantName, setTenantName] = useState('');
   const [tenantDocType, setTenantDocType] = useState('DNI');
@@ -52,9 +52,9 @@ export default function NewContractPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           propertyId,
-          propertyName: propertyId === 'prop_granvia' ? 'Coliving Gran Vía Suites' : 'Estudio Loft Malasaña',
+          propertyName: propertyId === 'prop_teatinos' ? 'Coliving Teatinos Universidad' : 'Estudio Soho Tech Málaga',
           unitId,
-          unitName: unitId === 'unit_h3' ? 'Habitación 3 - Interior' : 'Apartamento Loft',
+          unitName: unitId === 'unit_h3' ? 'Habitación 3 - Interior' : 'Apartamento Soho',
           tenantName,
           tenantDocType,
           tenantDocNumber,
@@ -205,8 +205,8 @@ export default function NewContractPage() {
                     onChange={(e) => setPropertyId(e.target.value)}
                     className="w-full text-xs bg-white border border-slate-300 rounded-lg p-2.5"
                   >
-                    <option value="prop_granvia">Coliving Gran Vía Suites (Madrid)</option>
-                    <option value="prop_malasana">Estudio Loft Malasaña (Madrid)</option>
+                    <option value="prop_teatinos">Coliving Teatinos Universidad (Málaga)</option>
+                    <option value="prop_soho">Estudio Soho Tech (Málaga)</option>
                   </select>
                 </div>
                 <div>
@@ -218,7 +218,7 @@ export default function NewContractPage() {
                   >
                     <option value="unit_h3">Habitación 3 - Interior (Libre - 450 €)</option>
                     <option value="unit_h4">Habitación 4 - Luminosa (490 €)</option>
-                    <option value="unit_apt1">Apartamento Loft Completo (950 €)</option>
+                    <option value="unit_apt1">Apartamento Soho Completo (950 €)</option>
                   </select>
                 </div>
               </div>
@@ -242,8 +242,8 @@ export default function NewContractPage() {
                     className="w-full text-xs bg-white border border-purple-300 rounded-lg p-2.5 font-medium"
                     required
                   >
-                    <option value="STUDIES">Estudios Universitarios / Máster / Erasmus</option>
-                    <option value="WORK_CONTRACT">Contrato laboral por obra / temporada / sustitución</option>
+                    <option value="STUDIES">Estudios Universitarios / Máster / UMA / Erasmus</option>
+                    <option value="WORK_CONTRACT">Contrato laboral temporal / Málaga TechPark (PTA)</option>
                     <option value="DIGITAL_NOMAD">Nómada digital / Proyecto tecnológico itinerante</option>
                     <option value="MEDICAL">Tratamiento médico temporal</option>
                     <option value="OTHER">Prácticas de empresa remuneradas</option>
@@ -259,7 +259,7 @@ export default function NewContractPage() {
                     required
                     value={tenantPermanentCity}
                     onChange={(e) => setTenantPermanentCity(e.target.value)}
-                    placeholder="Ej: Sevilla, Valencia, París, Roma..."
+                    placeholder="Ej: Sevilla, Valencia, Córdoba, Madrid, París..."
                     className="w-full text-xs bg-white border border-purple-300 rounded-lg p-2.5"
                   />
                   <span className="text-[10px] text-purple-700 mt-1 block">
@@ -276,7 +276,7 @@ export default function NewContractPage() {
                     rows={2}
                     value={temporalCauseDetail}
                     onChange={(e) => setTemporalCauseDetail(e.target.value)}
-                    placeholder="Ej: Matrícula oficial en Máster en Ciberseguridad UPM curso 2025/2026, justificando estancia por periodo lectivo."
+                    placeholder="Ej: Matrícula oficial en Máster en Ingeniería de Software UMA (Universidad de Málaga) curso 2025/2026, justificando estancia por periodo lectivo."
                     className="w-full text-xs bg-white border border-purple-300 rounded-lg p-2.5"
                   />
                 </div>

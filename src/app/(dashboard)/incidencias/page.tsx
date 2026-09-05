@@ -41,7 +41,7 @@ export default function IncidentsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           propertyId,
-          propertyName: 'Coliving Gran Vía Suites',
+          propertyName: 'Coliving Teatinos Universidad',
           unitName: isCommonArea ? 'Zona Común' : 'Habitación 1',
           title,
           description,
@@ -117,10 +117,10 @@ export default function IncidentsPage() {
                 Servicio Contratado de Limpieza de Zonas Comunes
               </span>
               <h2 className="text-base font-extrabold mt-0.5">
-                Coliving Gran Vía: Todos los Martes y Viernes (10:00 - 13:00 h)
+                Coliving Teatinos Universidad (Málaga): Todos los Martes y Viernes (10:00 - 13:00 h)
               </h2>
               <p className="text-xs text-slate-300 mt-1">
-                A cargo de <strong>Limpiezas Express Madrid</strong>. Se realiza limpieza intensiva y desinfección de los 2 baños completos, encimera de cocina, vitrocerámica, fregadero y aspirado del salón/pasillo.
+                A cargo de <strong>Limpiezas Costa del Sol (Málaga)</strong>. Se realiza limpieza intensiva y desinfección de los 2 baños completos, encimera de cocina, vitrocerámica, fregadero y aspirado del salón/pasillo.
               </p>
             </div>
           </div>

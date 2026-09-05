@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('==> Iniciando carga de datos de prueba (Seed)...');
+  console.log('==> Iniciando carga de datos de prueba (Málaga - Andalucía)...');
 
   const passwordHash = await bcrypt.hash('admin123', 10);
 
@@ -49,7 +49,7 @@ async function main() {
     where: { email: 'gestor@rentacasa.com' },
     update: {},
     create: {
-      name: 'Marcos Rivas (Property Manager)',
+      name: 'Marcos Rivas (Property Manager Málaga)',
       email: 'gestor@rentacasa.com',
       passwordHash,
       phone: '+34633445566',
@@ -99,20 +99,20 @@ async function main() {
     },
   });
 
-  // 2. Propiedad 1: Coliving Gran Vía (Piso de 4 habitaciones)
+  // 2. Propiedad 1: Coliving Teatinos Universidad (Piso de 4 habitaciones en Málaga)
   const colivingProperty = await prisma.property.create({
     data: {
-      name: 'Coliving Gran Vía Suites',
-      address: 'Calle de la Gran Vía 45, 4º Derecha',
-      city: 'Madrid',
-      postalCode: '28013',
-      cadastralRef: '9823412VK4792C0001TR',
+      name: 'Coliving Teatinos Universidad',
+      address: 'Avenida Plutarco 32, 2º B',
+      city: 'Málaga',
+      postalCode: '29010',
+      cadastralRef: '9823412UF7692C0001TR',
       energyRating: 'B',
-      energyCertUrl: 'https://ejemplo.com/cee-granvia.pdf',
-      commonAreas: 'Cocina de diseño equipada (2 frigoríficos combi, microondas, horno, lavavajillas), 2 baños completos de diseño, zona comedor/salón y cuarto de lavandería con lavadora y secadora.',
+      energyCertUrl: 'https://ejemplo.com/cee-teatinos.pdf',
+      commonAreas: 'Cocina de diseño equipada (2 frigoríficos combi, microondas, horno, lavavajillas), 2 baños completos con plato de ducha, zona comedor/salón y cuarto de lavandería con lavadora y secadora.',
       generalRules: 'Silencio riguroso de 23:00 a 08:00 h. Prohibido fumar en todo el inmueble. No se admiten mascotas ni celebración de fiestas. Las visitas no pueden pernoctar más de 2 noches consecutivas sin autorización expresa.',
-      wifiName: 'GranVia_Coliving_5G',
-      wifiPassword: 'FibraRapida2025!',
+      wifiName: 'Teatinos_Coliving_5G',
+      wifiPassword: 'MalagaFibra2025!',
       ownerId: owner.id,
       coOwners: {
         create: [
@@ -126,16 +126,16 @@ async function main() {
       },
       fixedExpenses: {
         create: [
-          { concept: 'Comunidad de Propietarios', amount: 95.0, frequency: 'MONTHLY' },
-          { concept: 'IBI (Impuesto Bienes Inmuebles)', amount: 650.0, frequency: 'ANNUAL' },
-          { concept: 'Seguro de Hogar e Impago', amount: 380.0, frequency: 'ANNUAL' },
+          { concept: 'Comunidad de Propietarios', amount: 85.0, frequency: 'MONTHLY' },
+          { concept: 'IBI Ayuntamiento de Málaga', amount: 520.0, frequency: 'ANNUAL' },
+          { concept: 'Seguro de Hogar e Impago', amount: 340.0, frequency: 'ANNUAL' },
           { concept: 'Fibra Óptica 1Gb Simétrica', amount: 39.99, frequency: 'MONTHLY' },
-          { concept: 'Servicio de Limpieza Zonas Comunes (Semanal)', amount: 160.0, frequency: 'MONTHLY' },
+          { concept: 'Servicio de Limpieza Zonas Comunes (Semanal)', amount: 150.0, frequency: 'MONTHLY' },
         ],
       },
       cleaningSchedules: {
         create: [
-          { dayOfWeek: 'Martes y Viernes', timeSlot: '10:00 - 13:00', staffName: 'Limpiezas Express Madrid', notes: 'Limpieza a fondo de baños, cocina y aspirado de pasillos.' },
+          { dayOfWeek: 'Martes y Viernes', timeSlot: '10:00 - 13:00', staffName: 'Limpiezas Costa del Sol (Málaga)', notes: 'Limpieza a fondo de baños, cocina y aspirado de pasillos.' },
         ],
       },
     },
@@ -219,7 +219,7 @@ async function main() {
   const hab4 = await prisma.unit.create({
     data: {
       propertyId: colivingProperty.id,
-      name: 'Habitación 4 - Luminosa Patio Manzana',
+      name: 'Habitación 4 - Luminosa Vista Abierta',
       type: 'ROOM',
       surfaceArea: 14.5,
       bedType: 'Doble (135x190 cm)',
@@ -239,25 +239,25 @@ async function main() {
     },
   });
 
-  // 4. Propiedad 2: Apartamento Independiente
+  // 4. Propiedad 2: Apartamento Independiente en Soho Tech Málaga
   const aptProperty = await prisma.property.create({
     data: {
-      name: 'Estudio Loft Malasaña',
-      address: 'Calle del Pez 22, 1º B',
-      city: 'Madrid',
-      postalCode: '28004',
-      cadastralRef: '8392104VK3810B0002RE',
+      name: 'Estudio Soho Tech Málaga',
+      address: 'Calle Tomás Heredia 14, 1º Izquierda',
+      city: 'Málaga',
+      postalCode: '29001',
+      cadastralRef: '8392104UF6810B0002RE',
       energyRating: 'C',
       commonAreas: 'Portal y ascensor comunitario.',
-      generalRules: 'Contrato de temporada por motivos profesionales. Prohibido subarriendo turístico en plataformas tipo Airbnb.',
-      wifiName: 'Malasiana_Loft_Fibra',
-      wifiPassword: 'StudioPez2025!',
+      generalRules: 'Contrato de temporada por motivos profesionales vinculados al ecosistema tecnológico de Málaga. Prohibido subarriendo turístico en plataformas tipo Airbnb.',
+      wifiName: 'Soho_Tech_Malaga_Fibra',
+      wifiPassword: 'StudioSoho2025!',
       ownerId: owner.id,
       fixedExpenses: {
         create: [
-          { concept: 'Comunidad', amount: 55.0, frequency: 'MONTHLY' },
-          { concept: 'IBI', amount: 380.0, frequency: 'ANNUAL' },
-          { concept: 'Seguro Multirriesgo', amount: 220.0, frequency: 'ANNUAL' },
+          { concept: 'Comunidad Mensual', amount: 50.0, frequency: 'MONTHLY' },
+          { concept: 'IBI Ayuntamiento de Málaga', amount: 320.0, frequency: 'ANNUAL' },
+          { concept: 'Seguro Multirriesgo', amount: 210.0, frequency: 'ANNUAL' },
         ],
       },
     },
@@ -266,7 +266,7 @@ async function main() {
   const aptUnit = await prisma.unit.create({
     data: {
       propertyId: aptProperty.id,
-      name: 'Apartamento Loft Completo',
+      name: 'Apartamento Soho Completo',
       type: 'APARTMENT',
       surfaceArea: 42.0,
       bedType: 'Cama doble 150cm',
@@ -280,10 +280,10 @@ async function main() {
     },
   });
 
-  // 5. Contrato Activo 1 (Juan Martínez - Estudiante Erasmus/Máster)
+  // 5. Contrato Activo 1 (Juan Martínez - Estudiante Máster UMA Campus Teatinos)
   const now = new Date();
   const startDate1 = new Date(now.getFullYear(), 8, 1); // 1 Septiembre
-  const endDate1 = new Date(now.getFullYear() + 1, 5, 30); // 30 Junio (Fin curso)
+  const endDate1 = new Date(now.getFullYear() + 1, 5, 30); // 30 Junio (Fin curso UMA)
 
   const contract1 = await prisma.contract.create({
     data: {
@@ -295,8 +295,8 @@ async function main() {
       depositAmount: 550.0,
       utilityCap: 35.0,
       temporalCauseType: 'STUDIES',
-      temporalCauseDetail: 'Matrícula en Máster Universitario en Ingeniería de Software - Universidad Politécnica de Madrid (Curso 2025-2026)',
-      temporalCauseDocUrl: 'https://ejemplo.com/matricula-juan.pdf',
+      temporalCauseDetail: 'Matrícula en Máster Universitario en Ingeniería del Software e Inteligencia Artificial - Universidad de Málaga (UMA) - Campus de Teatinos (Curso 2025-2026)',
+      temporalCauseDocUrl: 'https://ejemplo.com/matricula-uma-juan.pdf',
       permanentHomeCity: 'Sevilla (España)',
       status: 'ACTIVE',
       magicToken: 'magic_token_juan_123456789',
@@ -308,6 +308,7 @@ async function main() {
       auditTrailJson: JSON.stringify({
         timestampUtc: new Date().toISOString(),
         publicIp: '88.12.45.192',
+        jurisdiction: 'Málaga (Andalucía, España)',
         cloudflareCountry: 'ES',
         userAgent: 'iPhone iOS 17.4 Mobile Safari',
         contractHashSha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -318,7 +319,7 @@ async function main() {
       securityDeposit: {
         create: {
           amountHeld: 550.0,
-          regionalDepositRef: 'IVIMA-MAD-2025-098124',
+          regionalDepositRef: 'AVRA-MA-2025-098124', // Resguardo oficial Junta de Andalucía
           depositDate: new Date(now.getTime() - 1000 * 60 * 60 * 24 * 4),
           status: 'HELD',
         },
@@ -334,7 +335,7 @@ async function main() {
             status: 'PAID',
             paymentDate: new Date(),
             paymentMethod: 'TRANSFER',
-            notes: 'Transferencia bancaria recibida.',
+            notes: 'Transferencia bancaria recibida en cuenta corriente.',
           },
           {
             month: (now.getMonth() + 2 > 12 ? 1 : now.getMonth() + 2),
@@ -343,14 +344,14 @@ async function main() {
             utilitiesAmount: 0.0,
             totalAmount: 550.0,
             status: 'PENDING',
-            notes: 'En plazo de cobro ordinario (días 1 al 5).',
+            notes: 'En plazo de cobro ordinario (días 1 al 5 del mes).',
           },
         ],
       },
     },
   });
 
-  // 6. Contrato Activo 2 (Elena Santos - Contrato Obra Temporal)
+  // 6. Contrato Activo 2 (Elena Santos - Ingeniera en Málaga TechPark / PTA)
   const contract2 = await prisma.contract.create({
     data: {
       unitId: hab2.id,
@@ -361,8 +362,8 @@ async function main() {
       depositAmount: 650.0,
       utilityCap: 35.0,
       temporalCauseType: 'WORK_CONTRACT',
-      temporalCauseDetail: 'Contrato laboral por circunstancias de la producción para proyecto tecnológico de 6 meses en Paseo de la Castellana.',
-      temporalCauseDocUrl: 'https://ejemplo.com/contrato-trabajo-elena.pdf',
+      temporalCauseDetail: 'Contrato laboral temporal para proyecto de ingeniería de telecomunicaciones en empresa radicada en Málaga TechPark (Parque Tecnológico de Andalucía).',
+      temporalCauseDocUrl: 'https://ejemplo.com/contrato-trabajo-pta-elena.pdf',
       permanentHomeCity: 'Valencia (España)',
       status: 'ACTIVE',
       magicToken: 'magic_token_elena_987654321',
@@ -374,6 +375,7 @@ async function main() {
       auditTrailJson: JSON.stringify({
         timestampUtc: new Date().toISOString(),
         publicIp: '83.50.199.14',
+        jurisdiction: 'Málaga (Andalucía, España)',
         cloudflareCountry: 'ES',
         userAgent: 'Windows 10 Chrome 128',
         contractHashSha256: '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08',
@@ -382,7 +384,7 @@ async function main() {
       securityDeposit: {
         create: {
           amountHeld: 650.0,
-          regionalDepositRef: 'IVIMA-MAD-2025-081290',
+          regionalDepositRef: 'AVRA-MA-2025-081290', // Resguardo oficial Junta de Andalucía
           depositDate: new Date(now.getTime() - 1000 * 60 * 60 * 24 * 28),
           status: 'HELD',
         },
@@ -395,7 +397,7 @@ async function main() {
             rentAmount: 650.0,
             utilitiesAmount: 14.50,
             totalAmount: 664.50,
-            status: 'OVERDUE', // En rojo para probar el botón de WhatsApp!
+            status: 'OVERDUE', // En rojo para probar el botón de WhatsApp
             notes: 'Pendiente de cobro. Venció el día 5 del mes.',
           },
         ],
@@ -403,15 +405,15 @@ async function main() {
     },
   });
 
-  // 7. Factura de Suministro de Prueba (Luz mensual)
+  // 7. Factura de Suministro (Endesa Luz Teatinos Málaga)
   const utilityBill = await prisma.utilityBill.create({
     data: {
       propertyId: colivingProperty.id,
       type: 'ELECTRICITY',
-      invoiceNumber: 'FAC-IBER-2025-09812',
+      invoiceNumber: 'FAC-ENDE-2025-09812',
       periodStart: new Date(now.getFullYear(), now.getMonth() - 1, 1),
       periodEnd: new Date(now.getFullYear(), now.getMonth() - 1, 30),
-      totalAmount: 169.0, // Factura real de luz
+      totalAmount: 169.0,
       status: 'PROCESSED',
       notes: 'Bolsa contratada (2 habitaciones ocupadas x 35€ = 70€ de tope incluido). Exceso total de 99€ prorrateado equitativamente entre las 2 habitaciones ocupadas.',
       charges: {
@@ -442,7 +444,7 @@ async function main() {
       unitId: hab1.id,
       reportedById: tenant1.id,
       title: 'Persiana del balcón encallada',
-      description: 'La cinta de la persiana exterior no sube por completo, se queda atascada a media altura.',
+      description: 'La cinta de la persiana exterior no sube por completo, se queda atascada a media altura en Av. Plutarco.',
       isCommonArea: false,
       priority: 'MEDIUM',
       status: 'IN_PROGRESS',
@@ -450,25 +452,13 @@ async function main() {
     },
   });
 
-  await prisma.maintenanceTicket.create({
-    data: {
-      propertyId: colivingProperty.id,
-      reportedById: tenant2.id,
-      title: 'Ligera fuga en grifo del fregadero',
-      description: 'Gotea levemente por la junta inferior del monomando de la cocina común.',
-      isCommonArea: true,
-      priority: 'LOW',
-      status: 'REPORTED',
-    },
-  });
-
   // 9. Aviso formal con lectura fehaciente
-  const notice = await prisma.formalNotice.create({
+  await prisma.formalNotice.create({
     data: {
       propertyId: colivingProperty.id,
       senderId: owner.id,
-      title: 'Revisión Técnica Anual de Caldera y Calefacción',
-      message: 'Estimados inquilinos: el próximo jueves entre las 10:00 y las 12:00 h acudirá el técnico autorizado de Gas Natural para la revisión reglamentaria de la caldera comunitaria.',
+      title: 'Revisión Técnica Anual de Climatización y Agua Caliente',
+      message: 'Estimados inquilinos: el próximo jueves entre las 10:00 y las 12:00 h acudirá el técnico autorizado para la revisión reglamentaria de los equipos de climatización del inmueble en Teatinos.',
       urgencyLevel: 'IMPORTANT',
       reads: {
         create: [
@@ -483,19 +473,8 @@ async function main() {
     },
   });
 
-  console.log('==> Semilla completada con éxito.');
-  console.log('----------------------------------------------------');
-  console.log('Cuentas de prueba (Contraseña para todas: admin123):');
-  console.log('- Superadmin: superadmin@rentacasa.com');
-  console.log('- Dueño (Admin): propietario@rentacasa.com');
-  console.log('- Socia (Co-owner 50%): socio@rentacasa.com');
-  console.log('- Gestor (Manager): gestor@rentacasa.com');
-  console.log('- Inquilino 1: juan.estudiante@rentacasa.com');
-  console.log('- Inquilino 2: elena.temporal@rentacasa.com');
-  console.log('Tokens mágicos:');
-  console.log('- Juan: /portal/magic_token_juan_123456789');
-  console.log('- Elena: /portal/magic_token_elena_987654321');
-  console.log('----------------------------------------------------');
+  console.log('==> Semilla de Málaga (Andalucía) completada con éxito.');
+  console.log('Organismo oficial de fianza: AVRA (Agencia de Vivienda y Rehabilitación de Andalucía)');
 }
 
 main()

@@ -66,32 +66,32 @@ export default function OccupancyGanttPage() {
   const allUnits: GanttUnitItem[] = [
     {
       id: 'unit_h1',
-      propertyId: 'prop_granvia',
-      propertyName: 'Coliving Gran Vía Suites',
+      propertyId: 'prop_teatinos',
+      propertyName: 'Coliving Teatinos Universidad',
       name: 'Habitación 1 - Balcón',
       type: 'ROOM',
       price: 550,
-      occupiedMonths: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6], // Juan hasta Junio
-      tenant: 'Juan Martínez (Estudiante Máster)',
+      occupiedMonths: [9, 10, 11, 12, 1, 2, 3, 4, 5, 6], // Juan hasta Junio (UMA)
+      tenant: 'Juan Martínez (Máster UMA)',
       contractId: 'ct_juan',
       status: 'OCCUPIED',
     },
     {
       id: 'unit_h2',
-      propertyId: 'prop_granvia',
-      propertyName: 'Coliving Gran Vía Suites',
+      propertyId: 'prop_teatinos',
+      propertyName: 'Coliving Teatinos Universidad',
       name: 'Habitación 2 - Suite Baño Privado',
       type: 'ROOM',
       price: 650,
       occupiedMonths: [10, 11, 12, 1, 2], // Elena se va a finales de Febrero!
-      tenant: 'Elena Santos (Contrato temporal 5 meses)',
+      tenant: 'Elena Santos (Contrato Málaga TechPark)',
       contractId: 'ct_elena',
       status: 'ROTATING_SOON', // Vacante a partir de marzo
     },
     {
       id: 'unit_h3',
-      propertyId: 'prop_granvia',
-      propertyName: 'Coliving Gran Vía Suites',
+      propertyId: 'prop_teatinos',
+      propertyName: 'Coliving Teatinos Universidad',
       name: 'Habitación 3 - Interior',
       type: 'ROOM',
       price: 450,
@@ -101,8 +101,8 @@ export default function OccupancyGanttPage() {
     },
     {
       id: 'unit_h4',
-      propertyId: 'prop_granvia',
-      propertyName: 'Coliving Gran Vía Suites',
+      propertyId: 'prop_teatinos',
+      propertyName: 'Coliving Teatinos Universidad',
       name: 'Habitación 4 - Luminosa',
       type: 'ROOM',
       price: 490,
@@ -112,9 +112,9 @@ export default function OccupancyGanttPage() {
     },
     {
       id: 'unit_apt1',
-      propertyId: 'prop_malasana',
-      propertyName: 'Estudio Loft Malasaña',
-      name: 'Apartamento Loft Completo',
+      propertyId: 'prop_soho',
+      propertyName: 'Estudio Soho Tech Málaga',
+      name: 'Apartamento Soho Completo',
       type: 'APARTMENT',
       price: 950,
       occupiedMonths: [],
@@ -138,11 +138,11 @@ export default function OccupancyGanttPage() {
               Calendario de Ocupación / Timeline Gantt
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-800 border border-teal-200">
-              Media Temporada
+              Málaga Media Temporada
             </span>
           </div>
           <p className="text-sm text-slate-500 mt-1">
-            Visualiza la disponibilidad de cada habitación mes a mes y prevé las rotaciones críticas de febrero y junio.
+            Visualiza la disponibilidad de cada habitación mes a mes y prevé las rotaciones críticas de febrero y junio en Teatinos (UMA).
           </p>
         </div>
 
@@ -153,9 +153,9 @@ export default function OccupancyGanttPage() {
             onChange={(e) => setSelectedPropertyId(e.target.value)}
             className="text-sm font-semibold bg-white border border-slate-300 rounded-lg px-3.5 py-2 shadow-sm focus:ring-2 focus:ring-teal-500"
           >
-            <option value="ALL">Todos los Inmuebles</option>
-            <option value="prop_granvia">Coliving Gran Vía Suites</option>
-            <option value="prop_malasana">Estudio Loft Malasaña</option>
+            <option value="ALL">Todos los Inmuebles en Málaga</option>
+            <option value="prop_teatinos">Coliving Teatinos Universidad</option>
+            <option value="prop_soho">Estudio Soho Tech Málaga</option>
           </select>
 
           <Link

@@ -108,8 +108,8 @@ export default function UtilitiesPage() {
                 }}
                 className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs font-medium"
               >
-                <option value="prop_granvia">Coliving Gran Vía Suites (Habitaciones compartidas)</option>
-                <option value="prop_malasana">Estudio Loft Malasaña (Apartamento independiente)</option>
+                <option value="prop_teatinos">Coliving Teatinos Universidad (Málaga - Habitaciones)</option>
+                <option value="prop_soho">Estudio Soho Tech (Málaga - Apartamento)</option>
               </select>
             </div>
 
@@ -293,12 +293,12 @@ export default function UtilitiesPage() {
               <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-slate-900">FAC-IBER-2025-09812</span>
+                    <span className="font-bold text-slate-900">FAC-ENDE-2025-09812</span>
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">
-                      ⚡ Electricidad
+                      ⚡ Electricidad (Endesa)
                     </span>
                   </div>
-                  <p className="text-slate-500 mt-0.5">Coliving Gran Vía Suites · Periodo 01/09/2025 al 30/09/2025</p>
+                  <p className="text-slate-500 mt-0.5">Coliving Teatinos Universidad (Málaga) · Periodo 01/09/2025 al 30/09/2025</p>
                   <p className="text-[11px] text-teal-700 font-medium mt-1">
                     Factura: 169.00 € · Bolsa topes: 70.00 € · Exceso repercutido: 99.00 € (49.50 € a Juan y 49.50 € a Elena)
                   </p>

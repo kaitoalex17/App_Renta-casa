@@ -39,7 +39,7 @@ export default function NoticesPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           propertyId,
-          propertyName: 'Coliving Gran Vía Suites',
+          propertyName: 'Coliving Teatinos Universidad',
           title,
           message,
           urgencyLevel,

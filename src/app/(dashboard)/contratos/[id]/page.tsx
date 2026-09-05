@@ -178,7 +178,20 @@ export default async function ContractDetailPage({
           </p>
         </section>
 
-        {/* 7. Hoja de Evidencias Digitales / Audit Trail */}
+        {/* 7. Depósito de Fianza en AVRA y Fuero Judicial */}
+        <section className="space-y-2">
+          <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-1">
+            V. Depósito Autonómico de Fianza (AVRA) y Fuero Aplicable
+          </h2>
+          <p className="text-slate-600">
+            En cumplimiento de la <strong>Ley 8/1997 de la Comunidad Autónoma de Andalucía</strong>, el importe de la fianza legal será debidamente ingresado y depositado en la <strong>Agencia de Vivienda y Rehabilitación de Andalucía (AVRA)</strong> de la Junta de Andalucía.
+          </p>
+          <p className="text-slate-600">
+            Para la resolución de cualquier divergencia o litigio derivado de la interpretación o cumplimiento del presente contrato, ambas partes se someten de forma expresa a la jurisdicción y competencia de los <strong>Juzgados y Tribunales de Málaga capital</strong>, con renuncia expresa a cualquier otro fuero que pudiera corresponderles.
+          </p>
+        </section>
+
+        {/* 8. Hoja de Evidencias Digitales / Audit Trail */}
         <section className="border-t-2 border-teal-500 pt-6 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

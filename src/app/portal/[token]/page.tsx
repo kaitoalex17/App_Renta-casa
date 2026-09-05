@@ -147,7 +147,7 @@ export default function TenantPortalPage() {
               Hola, {contract?.tenantName || 'Huésped'} 👋
             </h1>
             <p className="text-xs text-slate-300 mt-0.5">
-              {contract?.unitName || 'Habitación 1'} · {contract?.propertyName || 'Coliving Gran Vía'}
+              {contract?.unitName || 'Habitación 1'} · {contract?.propertyName || 'Coliving Teatinos Universidad (Málaga)'}
             </p>
           </div>
 
@@ -169,11 +169,11 @@ export default function TenantPortalPage() {
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div className="p-3 bg-slate-800/80 rounded-xl">
               <span className="text-slate-400 block text-[10px]">Red Wi-Fi 5G:</span>
-              <span className="font-bold text-white">GranVia_Coliving_5G</span>
+              <span className="font-bold text-white">Teatinos_Coliving_5G</span>
             </div>
             <div className="p-3 bg-slate-800/80 rounded-xl">
               <span className="text-slate-400 block text-[10px]">Contraseña WiFi:</span>
-              <span className="font-mono font-bold text-teal-300">FibraRapida2025!</span>
+              <span className="font-mono font-bold text-teal-300">MalagaFibra2025!</span>
             </div>
           </div>
 
