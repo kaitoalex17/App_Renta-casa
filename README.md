@@ -103,6 +103,33 @@ git push origin main
 
 ---
 
+### ⚠️ Solución al Error `504 Gateway Time-out (OpenResty / Nginx Proxy Manager)`
+
+Si al hacer clic en **Deploy the stack** en Portainer recibes un error tipo:
+```html
+504 Gateway Time-out (openresty)
+```
+
+**¿Por qué ocurre este error?**
+1. **Compilación en segundo plano más lenta que el timeout del proxy:** Portainer está clonando el repositorio, descargando paquetes de Node y compilando Next.js (`npm run build`). Si tu servidor tiene recursos moderados (1-2 vCPU), el build puede tardar entre 2 y 4 minutos.
+2. Si tienes Portainer detrás de un reverse proxy como **Nginx Proxy Manager (que usa OpenResty)**, Traefik o Cloudflare, el proxy corta la conexión HTTP a los 60 segundos con un `504 Gateway Time-out`, **¡pero el servidor sigue compilando y levantando los contenedores en segundo plano!**
+
+**¿Qué hacer si te aparece?**
+1. **No pulses repetidamente en Deploy:** Espera 1 o 2 minutos.
+2. Ve al menú lateral de Portainer ➔ **Containers**.
+3. Verás que `renta-casa-app` y `renta-casa-db` se están creando o ya están en estado `running`.
+4. Si quieres evitar que vuelva a saltar el timeout en el proxy de Portainer:
+   * En **Nginx Proxy Manager** (en la pestaña *Advanced* del host de Portainer), aumenta los timeouts:
+     ```nginx
+     proxy_connect_timeout 600;
+     proxy_send_timeout 600;
+     proxy_read_timeout 600;
+     send_timeout 600;
+     ```
+   * O bien accede a Portainer directamente por su IP y puerto local (ej. `http://IP-SERVIDOR:9000` o `9443`) para desplegar stacks con build de Docker sin intermediarios.
+
+---
+
 ## 🌐 Configuración con Cloudflare y Nginx (Proxy Inverso)
 
 Para que el **Audit Trail legal** registre la dirección IP pública real del inquilino al firmar desde el móvil, se incluye una plantilla en `nginx.conf.example`.
