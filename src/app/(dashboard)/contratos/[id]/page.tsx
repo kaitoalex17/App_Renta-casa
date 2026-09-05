@@ -6,7 +6,6 @@ import {
   FileSignature,
   ArrowLeft,
   ShieldCheck,
-  Printer,
   CheckCircle2,
   Clock,
   Fingerprint,
@@ -15,6 +14,7 @@ import {
   Image as ImageIcon,
   Layers,
 } from 'lucide-react';
+import PrintButton from '@/components/PrintButton';
 
 export default async function ContractDetailPage({
   params,
@@ -39,6 +39,13 @@ export default async function ContractDetailPage({
       ? contract.unitPhotos
       : unit?.photos || [];
 
+  const formattedStartDate = contract.startDate
+    ? new Date(contract.startDate).toLocaleDateString('es-ES')
+    : 'Fecha no fijada';
+  const rentVal = typeof contract.monthlyRent === 'number' ? contract.monthlyRent.toFixed(2) : Number(contract.monthlyRent || 0).toFixed(2);
+  const depositVal = typeof contract.depositAmount === 'number' ? contract.depositAmount.toFixed(2) : Number(contract.depositAmount || 0).toFixed(2);
+  const utilityCapVal = typeof contract.utilityCap === 'number' ? contract.utilityCap.toFixed(2) : Number(contract.utilityCap || 0).toFixed(2);
+
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Botones superiores de navegación e impresión */}
@@ -62,15 +69,7 @@ export default async function ContractDetailPage({
             </Link>
           )}
 
-          <button
-            onClick={() => {
-              if (typeof window !== 'undefined') window.print();
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold shadow-sm transition"
-          >
-            <Printer className="w-4 h-4" />
-            <span>Imprimir / Guardar PDF</span>
-          </button>
+          <PrintButton />
         </div>
       </div>
 
@@ -88,7 +87,7 @@ export default async function ContractDetailPage({
             Sujeto al Art. 3 de la Ley 29/1994 de Arrendamientos Urbanos (LAU)
           </p>
           <p className="text-[11px] font-mono text-slate-400 mt-0.5">
-            Ref. Contractual: {contract.id} · Creado el {new Date(contract.startDate).toLocaleDateString()}
+            Ref. Contractual: {contract.id} · Fecha Inicio: {formattedStartDate}
           </p>
         </div>
 
@@ -98,10 +97,10 @@ export default async function ContractDetailPage({
             I. Comparecientes y Partes Intervinientes
           </h2>
           <p>
-            <strong>DE UNA PARTE (Arrendador):</strong> D. Carlos Mendoza, en calidad de Propietario / Administrador del inmueble sito en {contract.propertyName}, {property?.address} ({property?.city}).
+            <strong>DE UNA PARTE (Arrendador):</strong> D. Carlos Mendoza, en calidad de Propietario / Administrador del inmueble sito en {contract.propertyName || property?.name || 'Inmueble'}, {property?.address || 'Dirección no registrada'} ({property?.city || 'Málaga'}).
           </p>
           <p>
-            <strong>DE OTRA PARTE (Arrendatario):</strong> D./Dña. <strong>{contract.tenantName}</strong>, mayor de edad, provisto/a de {contract.tenantDocType} nº <strong>{contract.tenantDocNumber}</strong>, con domicilio habitual permanente acreditado en la ciudad de <strong>{contract.tenantPermanentCity}</strong>, teléfono {contract.tenantPhone || 'N/D'} y correo electrónico {contract.tenantEmail}.
+            <strong>DE OTRA PARTE (Arrendatario):</strong> D./Dña. <strong>{contract.tenantName}</strong>, mayor de edad, provisto/a de {contract.tenantDocType || 'DNI'} nº <strong>{contract.tenantDocNumber}</strong>, con domicilio habitual permanente acreditado en la ciudad de <strong>{contract.tenantPermanentCity || 'No especificada'}</strong>, teléfono {contract.tenantPhone || 'N/D'} y correo electrónico {contract.tenantEmail}.
           </p>
         </section>
 
@@ -125,7 +124,7 @@ export default async function ContractDetailPage({
             «{contract.temporalCauseDetail || 'Estancia motivada por estudios o trabajo temporal documentado.'}»
           </p>
           <p className="text-[11px] text-purple-900">
-            El arrendatario declara y ratifica de forma expresa que <strong>mantiene su domicilio habitual, familiar y permanente en {contract.tenantPermanentCity}</strong>, y que el presente arrendamiento tiene una finalidad estrictamente temporal vinculada a la causa manifestada, renunciando de forma expresa a los derechos de prórroga obligatoria previstos en el Art. 9 de la LAU para los arrendamientos de vivienda permanente.
+            El arrendatario declara y ratifica de forma expresa que <strong>mantiene su domicilio habitual, familiar y permanente en {contract.tenantPermanentCity || 'su ciudad de origen'}</strong>, y que el presente arrendamiento tiene una finalidad estrictamente temporal vinculada a la causa manifestada, renunciando de forma expresa a los derechos de prórroga obligatoria previstos en el Art. 9 de la LAU para los arrendamientos de vivienda permanente.
           </p>
         </section>
 
@@ -141,9 +140,9 @@ export default async function ContractDetailPage({
               <p><strong>Fecha de Salida (Check-out):</strong> {contract.endDate}</p>
             </div>
             <div>
-              <p><strong>Renta Mensual:</strong> {contract.monthlyRent.toFixed(2)} €/mes</p>
-              <p><strong>Fianza Legal Custodiada:</strong> {contract.depositAmount.toFixed(2)} €</p>
-              <p><strong>Tope Suministros Incluido:</strong> {contract.utilityCap.toFixed(2)} €/mes</p>
+              <p><strong>Renta Mensual:</strong> {rentVal} €/mes</p>
+              <p><strong>Fianza Legal Custodiada:</strong> {depositVal} €</p>
+              <p><strong>Tope Suministros Incluido:</strong> {utilityCapVal} €/mes</p>
             </div>
           </div>
           <p>
