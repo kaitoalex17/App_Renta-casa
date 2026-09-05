@@ -18,6 +18,20 @@ import {
   UnitData,
 } from '@/types';
 
+export function generateMagicToken(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    return 'tk_' + Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+  }
+  const chars = '0123456789abcdef';
+  let token = 'tk_';
+  for (let i = 0; i < 48; i++) {
+    token += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return token;
+}
+
 // Almacén en memoria persistente en el ciclo de vida del servidor de Node
 class DataStore {
   private properties: PropertyData[] = JSON.parse(JSON.stringify(INITIAL_PROPERTIES));
@@ -151,7 +165,7 @@ class DataStore {
   }
 
   createContract(data: Omit<ContractData, 'id' | 'magicToken' | 'magicTokenExpiresAt' | 'status'>): ContractData {
-    const token = `token_${Math.random().toString(36).substring(2, 15)}_${Date.now()}`;
+    const token = generateMagicToken();
     const newContract: ContractData = {
       ...data,
       id: `ct_${Date.now()}`,

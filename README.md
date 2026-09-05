@@ -68,7 +68,7 @@ En la pantalla de inicio de sesión (`/login`), dispones de un **Simulador de Ro
 * **Dueño Principal (Admin):** `propietario@rentacasa.com` (Contraseña: `admin123`)
 * **Socia Inversora (Co-owner 50%):** `socio@rentacasa.com` (Contraseña: `admin123`)
 * **Gestor Operativo (Manager):** `gestor@rentacasa.com` (Contraseña: `admin123`)
-* **Inquilino (Juan M.):** `juan.estudiante@rentacasa.com` (O acceso directo mediante token `/portal/magic_token_juan_123456789`)
+* **Inquilino (Juan M.):** `juan.estudiante@rentacasa.com` (O acceso directo mediante token `/portal/tk_8f9a2b4c6e0d1f3a5b7c9e2d4f6a8b0c1d3e5f7a9b8c7d6e`)
 
 ---
 

@@ -308,7 +308,7 @@ export default async function DashboardPage() {
 
           <div className="mt-6 flex flex-wrap gap-2">
             <Link
-              href="/firmar/magic_token_juan_123456789"
+              href="/firmar/tk_8f9a2b4c6e0d1f3a5b7c9e2d4f6a8b0c1d3e5f7a9b8c7d6e"
               className="inline-flex items-center gap-2 px-3.5 py-2 bg-teal-500 hover:bg-teal-400 text-slate-950 rounded-lg text-xs font-bold transition shadow-sm"
               target="_blank"
             >
@@ -316,7 +316,7 @@ export default async function DashboardPage() {
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <Link
-              href="/portal/magic_token_juan_123456789"
+              href="/portal/tk_8f9a2b4c6e0d1f3a5b7c9e2d4f6a8b0c1d3e5f7a9b8c7d6e"
               className="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-xs font-bold transition"
               target="_blank"
             >

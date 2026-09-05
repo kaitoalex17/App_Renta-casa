@@ -30,7 +30,7 @@ export default function LoginPage() {
       }
 
       if (data.user.role === 'TENANT') {
-        router.push('/portal/magic_token_juan_123456789');
+        router.push('/portal/tk_8f9a2b4c6e0d1f3a5b7c9e2d4f6a8b0c1d3e5f7a9b8c7d6e');
       } else {
         router.push('/dashboard');
       }
@@ -54,7 +54,7 @@ export default function LoginPage() {
       if (!res.ok) throw new Error(data.error);
 
       if (role === 'TENANT') {
-        router.push('/portal/magic_token_juan_123456789');
+        router.push('/portal/tk_8f9a2b4c6e0d1f3a5b7c9e2d4f6a8b0c1d3e5f7a9b8c7d6e');
       } else {
         router.push('/dashboard');
       }

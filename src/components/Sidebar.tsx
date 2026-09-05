@@ -34,7 +34,7 @@ export default function Sidebar({ userRole = 'ADMIN', userName }: SidebarProps) 
     { name: 'Finanzas & Rentabilidad', href: '/finanzas', icon: Wallet, roles: ['SUPERADMIN', 'ADMIN', 'CO_OWNER'] },
     { name: 'Averías & Limpieza', href: '/incidencias', icon: Wrench, roles: ['SUPERADMIN', 'ADMIN', 'MANAGER', 'TENANT'] },
     { name: 'Avisos Formales', href: '/avisos', icon: BellRing, roles: ['SUPERADMIN', 'ADMIN', 'MANAGER', 'TENANT'] },
-    { name: 'Portal Inquilino (Demo)', href: '/portal/magic_token_juan_123456789', icon: UserCheck, roles: ['SUPERADMIN', 'ADMIN', 'TENANT'] },
+    { name: 'Portal Inquilino (Demo)', href: '/portal/tk_8f9a2b4c6e0d1f3a5b7c9e2d4f6a8b0c1d3e5f7a9b8c7d6e', icon: UserCheck, roles: ['SUPERADMIN', 'ADMIN', 'TENANT'] },
   ];
 
   if (userRole === 'SUPERADMIN') {
