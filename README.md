@@ -130,6 +130,18 @@ Si al hacer clic en **Deploy the stack** en Portainer recibes un error tipo:
 
 ---
 
+### ⚠️ Solución al Error `Prisma schema validation - P1012 (The datasource property url is no longer supported)`
+
+Si observas en los logs del contenedor:
+```text
+Error: The datasource property `url` is no longer supported in schema files...
+Prisma CLI Version : 7.x.x
+```
+**Causa:** Prisma lanzó la versión 7 que rompe la sintaxis de `url = env(...)` de Prisma v5. Si se invoca `npx prisma`, `npx` puede descargar la versión 7 por defecto.
+**Solución implementada:** En `Dockerfile` y `entrypoint.sh` se incluye `node_modules` y se invoca directamente `./node_modules/.bin/prisma` para garantizar la ejecución estricta de **Prisma v5.21.1**. Asegúrate de marcar **Re-pull / Re-build** en Portainer para descartar imágenes en caché antiguas.
+
+---
+
 ## 🌐 Configuración con Cloudflare y Nginx (Proxy Inverso)
 
 Para que el **Audit Trail legal** registre la dirección IP pública real del inquilino al firmar desde el móvil, se incluye una plantilla en `nginx.conf.example`.
