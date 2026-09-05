@@ -2,7 +2,7 @@
 set -e
 
 echo "==> Esperando a que la base de datos esté lista y sincronizando esquema de Prisma..."
-npx prisma@5.21.1 db push --accept-data-loss
+./node_modules/.bin/prisma db push --accept-data-loss
 
 echo "==> Verificando si es necesario ejecutar la semilla de datos iniciales..."
 node prisma/seed.js || echo "Semilla inicial ya cargada o fallo no crítico."
