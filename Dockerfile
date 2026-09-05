@@ -29,7 +29,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
+ENV PORT=3060
 ENV HOSTNAME="0.0.0.0"
 
 RUN apk add --no-cache openssl dos2unix
@@ -50,6 +50,6 @@ RUN dos2unix /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 3060
 
 ENTRYPOINT ["/app/entrypoint.sh"]

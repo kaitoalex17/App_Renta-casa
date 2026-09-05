@@ -115,7 +115,7 @@ set_real_ip_from 173.245.48.0/20;
 # ... (ver lista completa en nginx.conf.example)
 
 location / {
-    proxy_pass http://127.0.0.1:3000;
+    proxy_pass http://127.0.0.1:3060;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";

@@ -8,12 +8,13 @@ services:
     container_name: renta-casa-app
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3060:3060"
     environment:
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/rentacasa?schema=public
       - NEXTAUTH_SECRET=genera_un_secreto_seguro_aqui_para_produccion
-      - NEXTAUTH_URL=http://localhost:3000
-      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - NEXTAUTH_URL=http://localhost:3060
+      - NEXT_PUBLIC_APP_URL=http://localhost:3060
+      - PORT=3060
       - NODE_ENV=production
     depends_on:
       db:
@@ -23,6 +24,8 @@ services:
     image: postgres:16-alpine
     container_name: renta-casa-db
     restart: unless-stopped
+    ports:
+      - "5492:5432" # Puerto PostgreSQL expuesto al host: 5432 + 60 = 5492
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgrespassword
