@@ -12,8 +12,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/rentacasa?schema=public
       - NEXTAUTH_SECRET=genera_un_secreto_seguro_aqui_para_produccion
-      - NEXTAUTH_URL=http://localhost:3060
-      - NEXT_PUBLIC_APP_URL=http://localhost:3060
+      - NEXTAUTH_URL=https://renta-casa.instala.xyz
+      - NEXT_PUBLIC_APP_URL=https://renta-casa.instala.xyz
       - PORT=3060
       - NODE_ENV=production
     volumes:

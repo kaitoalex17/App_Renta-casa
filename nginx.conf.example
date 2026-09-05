@@ -31,12 +31,12 @@ real_ip_header CF-Connecting-IP;
 
 server {
     listen 80;
-    server_name tu-dominio-alquiler.com www.tu-dominio-alquiler.com;
+    server_name renta-casa.instala.xyz;
 
     # Si usas SSL en Nginx (o Certbot) descomenta / ajusta los bloques SSL:
     # listen 443 ssl http2;
-    # ssl_certificate /etc/letsencrypt/live/tu-dominio-alquiler.com/fullchain.pem;
-    # ssl_certificate_key /etc/letsencrypt/live/tu-dominio-alquiler.com/privkey.pem;
+    # ssl_certificate /etc/letsencrypt/live/renta-casa.instala.xyz/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/renta-casa.instala.xyz/privkey.pem;
 
     # Tamaño máximo para subida de fotos de incidencias, DNI y contratos en PDF
     client_max_body_size 50M;
