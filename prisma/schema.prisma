@@ -1,0 +1,396 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  CO_OWNER
+  MANAGER
+  TENANT
+}
+
+enum UnitType {
+  ROOM
+  APARTMENT
+}
+
+enum UnitStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  MAINTENANCE
+}
+
+enum TemporalCauseType {
+  STUDIES
+  WORK_CONTRACT
+  DIGITAL_NOMAD
+  MEDICAL
+  OTHER
+}
+
+enum ContractStatus {
+  DRAFT
+  PENDING_SIGNATURE
+  ACTIVE
+  FINISHED
+  TERMINATED_EARLY
+}
+
+enum ExpenseFrequency {
+  MONTHLY
+  BI_MONTHLY
+  QUARTERLY
+  ANNUAL
+}
+
+enum UtilityType {
+  ELECTRICITY
+  WATER
+  GAS
+  INTERNET
+}
+
+enum PaymentStatus {
+  PAID
+  PENDING
+  OVERDUE
+}
+
+enum PaymentMethod {
+  TRANSFER
+  BIZUM
+  CASH
+  CARD
+}
+
+enum DepositStatus {
+  HELD
+  SETTLING
+  RETURNED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketStatus {
+  REPORTED
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+enum NoticeUrgency {
+  INFO
+  IMPORTANT
+  LEGAL_WARNING
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relaciones
+  propertiesOwned    Property[]          @relation("OwnerProperties")
+  coOwnerships       PropertyOwnership[]
+  managedProperties  PropertyManager[]
+  tenantProfile      TenantProfile?
+  contractsAsTenant  Contract[]          @relation("TenantContracts")
+  ticketsReported    MaintenanceTicket[]
+  noticesSent        FormalNotice[]      @relation("SentNotices")
+  noticesRead        FormalNoticeRead[]  @relation("TenantNoticesRead")
+}
+
+model Property {
+  id                  String   @id @default(cuid())
+  name                String
+  address             String
+  city                String
+  postalCode          String
+  cadastralRef        String?
+  energyRating        String?  // Ej: B, C, D
+  energyCertUrl       String?
+  commonAreas         String?  // Ej: Cocina equipada, 2 baños compartidos, salón
+  generalRules        String?  // Normas de la casa
+  wifiName            String?
+  wifiPassword        String?
+  ownerId             String
+  owner               User     @relation("OwnerProperties", fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relaciones
+  units               Unit[]
+  coOwners            PropertyOwnership[]
+  managers            PropertyManager[]
+  fixedExpenses       PropertyFixedExpense[]
+  utilityBills        UtilityBill[]
+  tickets             MaintenanceTicket[]
+  cleaningSchedules   CleaningSchedule[]
+  notices             FormalNotice[]
+}
+
+model PropertyOwnership {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  percentage Float    // Ej: 50.0 para 50%
+  createdAt  DateTime @default(now())
+
+  @@unique([propertyId, userId])
+}
+
+model PropertyManager {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([propertyId, userId])
+}
+
+model PropertyFixedExpense {
+  id         String           @id @default(cuid())
+  propertyId String
+  property   Property         @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  concept    String           // IBI, Comunidad, Seguro, Internet, Tasa de Basuras
+  amount     Float
+  frequency  ExpenseFrequency @default(MONTHLY)
+  notes      String?
+  createdAt  DateTime         @default(now())
+}
+
+model Unit {
+  id                 String     @id @default(cuid())
+  propertyId         String
+  property           Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  name               String     // "Habitación 1 - Exterior", "Estudio 2B"
+  type               UnitType   @default(ROOM)
+  surfaceArea        Float?     // en m2
+  bedType            String?    // "Doble (135cm)", "Individual (90cm)"
+  hasDesk            Boolean    @default(true)
+  privateBathroom    Boolean    @default(false)
+  baseRent           Float
+  depositAmount      Float
+  utilityCap         Float      @default(35.0) // Tope incluido en habitaciones (ej. 35€/mes)
+  electricMeterNumber String?   // Número de contador/subcontador en apartamentos
+  status             UnitStatus @default(AVAILABLE)
+  notes              String?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  contracts          Contract[]
+  inventoryItems     InventoryItem[]
+  tickets            MaintenanceTicket[]
+}
+
+model TenantProfile {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  idDocumentType        String   @default("DNI") // DNI, NIE, PASAPORTE
+  idDocumentNumber      String
+  idDocumentUrl         String?
+  permanentAddress      String   // Domicilio habitual permanente acreditado
+  emergencyContactName  String
+  emergencyContactPhone String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Contract {
+  id                    String            @id @default(cuid())
+  unitId                String
+  unit                  Unit              @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  tenantId              String
+  tenant                User              @relation("TenantContracts", fields: [tenantId], references: [id], onDelete: Cascade)
+  startDate             DateTime
+  endDate               DateTime
+  monthlyRent           Float
+  depositAmount         Float
+  utilityCap            Float             @default(35.0)
+  temporalCauseType     TemporalCauseType @default(STUDIES)
+  temporalCauseDetail   String?           // Matrícula de máster, contrato de trabajo, etc.
+  temporalCauseDocUrl   String?
+  permanentHomeCity     String            // Ciudad de residencia permanente fuera del alquiler
+  status                ContractStatus    @default(DRAFT)
+  
+  // Magic link de firma y auditoría
+  magicToken            String            @unique
+  magicTokenExpiresAt   DateTime
+  signedAt              DateTime?
+  signerIp              String?           // Obtenida de CF-Connecting-IP o X-Forwarded-For
+  signerUserAgent       String?
+  signatureSvg          String?           @db.Text
+  auditTrailJson        String?           @db.Text // Metadatos del sellado probatorio
+  
+  // Onboarding complementario
+  inventoryVerifiedAt   DateTime?
+  inventoryRemarks      String?
+  keyDeliveryDate       DateTime?
+  
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  utilityCharges        UtilityCharge[]
+  paymentReceipts       PaymentReceipt[]
+  securityDeposit       SecurityDeposit?
+}
+
+model InventoryItem {
+  id                String   @id @default(cuid())
+  unitId            String?
+  unit              Unit?    @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  propertyId        String?  // Para inventario de zonas comunes
+  name              String   // Ej: "Cama con canapé", "Escritorio con flexo", "Juego de llaves"
+  quantity          Int      @default(1)
+  condition         String   @default("Buen estado")
+  isCommonArea      Boolean  @default(false)
+  verifiedByTenant  Boolean  @default(false)
+  tenantNotes       String?
+  photoUrl          String?
+  createdAt         DateTime @default(now())
+}
+
+model UtilityBill {
+  id             String        @id @default(cuid())
+  propertyId     String
+  property       Property      @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  type           UtilityType   @default(ELECTRICITY)
+  invoiceNumber  String?
+  periodStart    DateTime
+  periodEnd      DateTime
+  totalAmount    Float
+  invoicePdfUrl  String?
+  status         String        @default("PROCESSED") // PENDING_CALCULATION, PROCESSED
+  notes          String?
+  createdAt      DateTime      @default(now())
+
+  charges        UtilityCharge[]
+}
+
+model UtilityCharge {
+  id                String      @id @default(cuid())
+  utilityBillId     String
+  utilityBill       UtilityBill @relation(fields: [utilityBillId], references: [id], onDelete: Cascade)
+  contractId        String
+  contract          Contract    @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  proratedDays      Int         // Días ocupados durante el periodo de facturación
+  amountCharged     Float       // Importe repercutido tras aplicar tope o prorrateo
+  calculationDetail String?     // Ej: "Exceso de 32.50€ repartido entre 4 habitaciones activas"
+  isSettled         Boolean     @default(false)
+  createdAt         DateTime    @default(now())
+}
+
+model PaymentReceipt {
+  id              String        @id @default(cuid())
+  contractId      String
+  contract        Contract      @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  month           Int           // 1 al 12
+  year            Int
+  rentAmount      Float
+  utilitiesAmount Float         @default(0)
+  otherAmount     Float         @default(0)
+  totalAmount     Float
+  status          PaymentStatus @default(PENDING)
+  paymentDate     DateTime?
+  paymentMethod   PaymentMethod?
+  proofUrl        String?
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model SecurityDeposit {
+  id                 String        @id @default(cuid())
+  contractId         String        @unique
+  contract           Contract      @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  amountHeld         Float
+  regionalDepositRef String?       // Ref. depósito en AVRA, IVIMA, INCASÒL, etc.
+  depositDate        DateTime?
+  status             DepositStatus @default(HELD)
+  returnedAmount     Float?
+  deductionsJson     String?       @db.Text // Desglose: { "limpieza": 50, "desperfectos": 30, "luzPendiente": 25 }
+  settlementDate     DateTime?
+  settlementNotes    String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model MaintenanceTicket {
+  id             String         @id @default(cuid())
+  propertyId     String
+  property       Property       @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  unitId         String?
+  unit           Unit?          @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  reportedById   String
+  reportedBy     User           @relation(fields: [reportedById], references: [id], onDelete: Cascade)
+  title          String
+  description    String
+  isCommonArea   Boolean        @default(false)
+  priority       TicketPriority @default(MEDIUM)
+  status         TicketStatus   @default(REPORTED)
+  photoUrlsJson  String?        @db.Text
+  resolvedAt     DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model CleaningSchedule {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  dayOfWeek  String   // Ej: "Lunes y Jueves"
+  timeSlot   String   // Ej: "10:00 - 13:00"
+  staffName  String?  // Ej: "Servicio Limpieza Pro"
+  notes      String?  // Instrucciones zonas comunes
+  createdAt  DateTime @default(now())
+}
+
+model FormalNotice {
+  id           String             @id @default(cuid())
+  propertyId   String
+  property     Property           @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  contractId   String?            // Opcional: si va dirigida a un inquilino específico
+  senderId     String
+  sender       User               @relation("SentNotices", fields: [senderId], references: [id], onDelete: Cascade)
+  title        String
+  message      String
+  urgencyLevel NoticeUrgency      @default(INFO)
+  createdAt    DateTime           @default(now())
+
+  reads        FormalNoticeRead[]
+}
+
+model FormalNoticeRead {
+  id              String       @id @default(cuid())
+  formalNoticeId  String
+  formalNotice    FormalNotice @relation(fields: [formalNoticeId], references: [id], onDelete: Cascade)
+  tenantId        String
+  tenant          User         @relation("TenantNoticesRead", fields: [tenantId], references: [id], onDelete: Cascade)
+  readAt          DateTime     @default(now())
+  readerIp        String?
+  readerUserAgent String?
+
+  @@unique([formalNoticeId, tenantId])
+}
